@@ -151,8 +151,10 @@ curl http://135.232.96.6
 
 To link your domain to your Azure VM, configure the following DNS records in GoDaddy:
 
-Type	  Name   Value
- A	      @	   135.232.96.6
+| Type | Name | Value |
+|----------|-------|----------|
+|   A   |   @ | 135.232.96.6 | 
+
 
 These A records point the domain to your server's public IP.
 
