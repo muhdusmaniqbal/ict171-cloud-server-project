@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Budget Tracker</title>
+  <style>
+    :root{--bg:#0b1020;--card:#11172a;--muted:#8a97b1;--text:#e8eefc;--accent:#7aa2ff;--good:#22c55e;--bad:#ef4444}
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(120deg,#0b1020,#0e1428);color:var(--text);font:16px/1.5 system-ui,Segoe UI,Roboto,Arial}
+    header{padding:24px 20px;border-bottom:1px solid #1f2942}
+    h1{margin:0 0 6px;font-size:28px}
+    .sub{color:var(--muted)}
+    main{max-width:1024px;margin:0 auto;padding:20px;display:grid;gap:16px;grid-template-columns:360px 1fr}
+    @media (max-width:900px){main{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid #1f2942;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+    .card h2{margin:0;padding:16px 16px 8px;border-bottom:1px solid #1f2942;font-size:18px}
+    .pad{padding:16px}
+    label{display:block;font-size:13px;color:var(--muted);margin-top:12px;margin-bottom:6px}
+    input,select,button,textarea{width:100%;padding:10px 12px;border-radius:12px;border:1px solid #2a365a;background:#0f1629;color:var(--text)}
+    input::placeholder{color:#64708b}
+    button{cursor:pointer;background:linear-gradient(180deg,#5d88ff,#4a72e8);border:0;font-weight:600}
+    button.secondary{background:#15203a;border:1px solid #2a365a}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .stack{display:flex;gap:10px;flex-wrap:wrap}
+    .pill{padding:6px 10px;border-radius:999px;background:#0e1730;border:1px solid #243158;color:var(--muted);font-size:12px}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid #1f2942;text-align:left;font-size:14px}
+    th{color:#9fb0d3;font-weight:600}
+    .right{text-align:right}
+    .good{color:var(--good)}
+    .bad{color:var(--bad)}
+    .muted{color:var(--muted)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .kpi{background:#0e1730;border:1px solid #243158;border-radius:14px;padding:14px}
+    .kpi .label{font-size:12px;color:var(--muted)}
+    .kpi .value{font-size:20px;font-weight:700}
+    footer{max-width:1024px;margin:24px auto 64px;color:var(--muted);padding:0 20px}
+    .note{font-size:12px}
+    .center{display:flex;justify-content:center;align-items:center}
+    .progress{height:10px;border-radius:999px;background:#0e1730;border:1px solid #243158;overflow:hidden}
+    .progress>div{height:100%;background:linear-gradient(180deg,#7aa2ff,#5a83ff)}
+    .badge{display:inline-block;padding:2px 8px;border:1px solid #243158;background:#0e1730;border-radius:999px;font-size:11px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Personal Budget Tracker</h1>
+    <div class="sub">Quickly log expenses & income, view monthly totals, and export your data. <span class="badge">Local-only (saved in your browser)</span></div>
+  </header>
+
+  <main>
+    <!-- Left: Add transaction -->
+    <section class="card" aria-label="Add transaction">
+      <h2>New Transaction</h2>
+      <div class="pad">
+        <div class="row">
+          <div>
+            <label for="date">Date</label>
+            <input id="date" type="date" />
+          </div>
+          <div>
+            <label for="type">Type</label>
+            <select id="type">
+              <option value="expense">Expense (−)</option>
+              <option value="income">Income (+)</option>
+            </select>
+          </div>
+        </div>
+        <label for="desc">Description</label>
+        <input id="desc" type="text" placeholder="e.g., Groceries" />
+
+        <div class="row3">
+          <div>
+            <label for="category">Category</label>
+            <select id="category">
+              <option>Food</option>
+              <option>Transport</option>
+              <option>Housing</option>
+              <option>Utilities</option>
+              <option>Health</option>
+              <option>Entertainment</option>
+              <option>Education</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="amount">Amount</label>
+            <input id="amount" type="number" step="0.01" placeholder="0.00" />
+          </div>
+          <div>
+            <label for="currency">Currency</label>
+            <select id="currency">
+              <option>AED</option>
+              <option>USD</option>
+              <option>CAD</option>
+              <option>EUR</option>
+              <option>GBP</option>
+            </select>
+          </div>
+        </div>
+        <div class="stack" style="margin-top:14px">
+          <button id="addBtn">Add</button>
+          <button class="secondary" id="clearFormBtn" type="button">Clear</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Summary + table -->
+    <section class="card" aria-label="Overview">
+      <h2>Overview</h2>
+      <div class="pad">
+        <div class="grid2">
+          <div>
+            <label>Month</label>
+            <input id="month" type="month" />
+          </div>
+          <div>
+            <label>&nbsp;</label>
+            <div class="stack">
+              <button class="secondary" id="prevMonth">◀ Prev</button>
+              <button class="secondary" id="nextMonth">Next ▶</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary" style="margin-top:14px">
+          <div class="kpi">
+            <div class="label">Income</div>
+            <div class="value good" id="kpiIncome">0.00</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Expenses</div>
+            <div class="value bad" id="kpiExpense">0.00</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Net</div>
+            <div class="value" id="kpiNet">0.00</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="label">Budget Progress</div>
+          <div class="progress"><div id="progressFill" style="width:0%"></div></div>
+          <div class="note">Set a monthly budget to visualize usage.</div>
+          <div class="row" style="margin-top:8px">
+            <div>
+              <label for="budget">Monthly Budget</label>
+              <input id="budget" type="number" step="0.01" placeholder="e.g., 2000" />
+            </div>
+            <div>
+              <label>&nbsp;</label>
+              <button class="secondary" id="saveBudget">Save Budget</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stack" style="margin-top:12px">
+          <button class="secondary" id="exportMonthlyCsv">Export Monthly CSV</button>
+          <button class="secondary" id="exportOverallCsv">Export Overall CSV</button>
+          <button class="secondary" id="clearAll">Clear All Data (All Months & Years)</button>
+        </div>
+
+        <div style="margin-top:14px;max-height:380px;overflow:auto;border:1px solid #243158;border-radius:12px">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th class="right">Amount</th>
+                <th>Type</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="note">
+      Student #: <span id="studentNumber">35544407</span> • License: MIT • Server IP: <span id="serverIp">135.232.96.6</span>
+      <br>© <span id="year"></span> — Personal Budget Tracker. Data is stored locally in your browser via <code>localStorage</code>.
+    </div>
+  </footer>
+
+  <script>
+    // ---------- Utilities ----------
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+    const toMoney = (n) => (Number(n) || 0).toFixed(2);
+    const key = 'budget-tracker-v1';
+
+    const state = {
+      tx: [], // {id, date, description, category, amount, type, currency}
+      budgets: {}, // { 'YYYY-MM': number }
+    };
+
+    function save() { localStorage.setItem(key, JSON.stringify(state)); }
+    function load() {
+      const raw = localStorage.getItem(key);
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          Object.assign(state, parsed);
+        } catch (e) {
+          console.warn('Bad data, resetting');
+          localStorage.removeItem(key);
+        }
+      }
+    }
+
+    function monthKey(d) {
+      const dt = new Date(d);
+      return dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0');
+    }
+
+    function setMonthInput(date) {
+      const dt = new Date(date);
+      $('#month').value = dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0');
+    }
+
+    function currentMonth() { return $('#month').value || monthKey(new Date()); }
+
+    // ---------- Month Navigation ----------
+    function goMonth(delta) {
+      const [y, m] = ($('#month').value || monthKey(new Date())).split('-').map(Number);
+      let newMonth = m + delta;
+      let newYear = y;
+
+      // Month overflow
+      if (newMonth < 1) {
+        newMonth = 12;  // Go to December
+        newYear--;  // Decrease the year
+      } else if (newMonth > 12) {
+        newMonth = 1;  // Go to January
+        newYear++;  // Increase the year
+      }
+      $('#month').value = `${newYear}-${String(newMonth).padStart(2, '0')}`;
+      render();
+    }
+
+    // ---------- Rendering ----------
+    function render() {
+      const mk = currentMonth();
+      const rows = $('#rows');
+      rows.innerHTML = '';
+      const filtered = state.tx.filter(t => monthKey(t.date) === mk);
+      let income = 0, expense = 0;
+      for (const t of filtered) {
+        if (t.type === 'income') income += Number(t.amount);
+        else expense += Number(t.amount);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${t.date}</td>
+          <td>${escapeHtml(t.desc)}</td>
+          <td>${escapeHtml(t.category)}</td>
+          <td class="right ${t.type === 'income' ? 'good' : 'bad'}">${t.type === 'income' ? '+' : '-'}${toMoney(t.amount)} ${t.currency || ''}</td>
+          <td>${t.type}</td>
+          <td class="right"><button class="secondary" data-del="${t.id}">Delete</button></td>
+        `;
+        rows.appendChild(tr);
+      }
+      $('#kpiIncome').textContent = toMoney(income);
+      $('#kpiExpense').textContent = toMoney(expense);
+      $('#kpiNet').textContent = toMoney(income - expense);
+
+      // Progress bar
+      const budget = Number(state.budgets[mk] || 0);
+      $('#budget').value = budget ? budget : '';
+      const used = expense;
+      const pct = budget > 0 ? Math.min(100, Math.round((used / budget) * 100)) : 0;
+      $('#progressFill').style.width = pct + '%';
+
+      // wire delete buttons
+      $$('#rows [data-del]').forEach(btn => btn.onclick = () => {
+        const id = btn.getAttribute('data-del');
+        state.tx = state.tx.filter(x => x.id !== id);
+        save();
+        render();
+      });
+    }
+
+    // ---------- Actions ----------
+    function addTx() {
+      const date = $('#date').value || new Date().toISOString().slice(0, 10);
+      const type = $('#type').value;
+      const desc = $('#desc').value.trim();
+      const category = $('#category').value;
+      const amount = Math.abs(Number($('#amount').value));
+      const currency = $('#currency').value;
+      if (!amount || !desc) { alert('Please enter a description and a numeric amount.'); return; }
+      const tx = { id: cryptoRandomId(), date, type, desc, category, amount, currency };
+      state.tx.push(tx);
+      save();
+      clearForm();
+      render();
+    }
+
+    function clearForm() { $('#desc').value = ''; $('#amount').value = ''; }
+
+    function saveBudget() {
+      const mk = currentMonth();
+      const v = Number($('#budget').value);
+      if (!v) { delete state.budgets[mk]; } else { state.budgets[mk] = Math.abs(v); }
+      save();
+      render();
+    }
+
+    function exportMonthlyCsv() {
+      const mk = currentMonth();
+      const head = ['date', 'type', 'desc', 'category', 'amount', 'currency'];
+      const rows = state.tx.filter(t => monthKey(t.date) === mk)
+        .map(t => [t.date, t.type, escapeCsv(t.desc), escapeCsv(t.category), t.amount, t.currency].join(','));
+      const csv = [head.join(','), ...rows].join('\n');
+	  const currentMonthName = $('#month').value; // Current month selected in the input
+      const filename = `budget-data-${currentMonthName}.csv`;
+      const blob = new Blob([csv], { type: 'text/csv' });
+      download(blob, filename);
+    }
+
+    function exportOverallCsv() {
+      const head = ['date', 'type', 'desc', 'category', 'amount', 'currency'];
+      const rows = state.tx.map(t => [t.date, t.type, escapeCsv(t.desc), escapeCsv(t.category), t.amount, t.currency].join(','));
+      const csv = [head.join(','), ...rows].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      download(blob, 'overall-budget-data.csv');
+    }
+
+    function clearAll() {
+      if (confirm('Delete all data?')) { state.tx = []; state.budgets = {}; save(); render(); }
+    }
+
+    // ---------- Helpers ----------
+    function cryptoRandomId() {
+      if (window.crypto && crypto.getRandomValues) {
+        const a = new Uint32Array(2); crypto.getRandomValues(a);
+        return [...a].map(x => x.toString(16)).join('');
+      }
+      return 'id-' + Math.random().toString(36).slice(2);
+    }
+
+    function download(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click();
+      setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 0);
+    }
+
+    function escapeHtml(s) { return s.replace(/[&<>"] /g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", " ": "&nbsp;" })[c]); }
+    function escapeCsv(s) { return '"' + String(s).replace(/"/g, '""') + '"'; }
+
+    // ---------- Init ----------
+    (function () {
+      load();
+      setMonthInput(new Date());
+      $('#date').value = new Date().toISOString().slice(0, 10);
+
+      // events
+      $('#addBtn').onclick = addTx;
+      $('#clearFormBtn').onclick = clearForm;
+      $('#saveBudget').onclick = saveBudget;
+      $('#exportMonthlyCsv').onclick = exportMonthlyCsv;
+      $('#exportOverallCsv').onclick = exportOverallCsv;
+      $('#clearAll').onclick = clearAll;
+      $('#prevMonth').onclick = () => goMonth(-1); // Decrease month
+      $('#nextMonth').onclick = () => goMonth(1);  // Increase month
+      $('#month').onchange = render;
+
+      render();
+      document.getElementById('year').textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>
