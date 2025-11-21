@@ -250,6 +250,6 @@ The documentation makes sure that any ICT171 student can repeat the process up t
 
 Live Site: https://personalbudgetstracker.com
 
-GitHub Repository: Add your repo link here
+GitHub Repository: [Add your repo link here](https://github.com/muhdusmaniqbal/ict171-cloud-server-project/blob/main/README.md)
 
 Video Explainer: Add your video link here
