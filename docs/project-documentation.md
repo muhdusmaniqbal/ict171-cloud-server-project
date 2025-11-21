@@ -60,3 +60,69 @@ From your local machine:
 
 ```bash
 ssh usman@135.232.96.6
+```
+
+---
+
+# 4. System Updates
+
+Once connected to the VM, update the system packages to ensure the server is running the latest security patches within Ubuntu:
+
+```bash
+sudo apt update
+sudo apt upgrade -y
+```
+
+#5. Install and Configure Nginx 
+
+Install the Nginx web server:
+```bash
+sudo apt install nginx -y
+```
+
+Enable and start the service:
+```bash
+sudo systemctl enable --now nginx
+sudo systemctl status nginx --no-pager
+```
+
+Check that Nginx is listening on port 80:
+```bash
+sudo ss -tulpen | grep :80
+```
+
+Test locally:
+```bash
+curl http://localhost
+```
+
+Test externally:
+```bash
+curl http://135.232.96.6
+```
+
+#6. Deploying the Website
+
+Navigate to the Nginx web root:
+
+```
+cd /var/www/html
+```
+
+Back up the default index file:
+```
+sudo mv index.nginx-debian.html index.nginx-debian.html.bak
+```
+
+Create your website file:
+```
+sudo nano index.html
+```
+
+Paste your Personal Budget Tracker website HTML into the new file and save it.
+
+Test the site using the public IP:
+```
+curl http://135.232.96.6
+```
+
