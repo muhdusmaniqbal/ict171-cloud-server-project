@@ -252,4 +252,4 @@ Live Site: https://personalbudgetstracker.com
 
 GitHub Repository: [repo link](https://github.com/muhdusmaniqbal/ict171-cloud-server-project/blob/main/README.md)
 
-Video Explainer: Add your video link here
+Video Explainer: [Video Explainer](https://youtu.be/3K2UM5i-IyI)
