@@ -214,4 +214,42 @@ Check using multiple devices (mobile + laptop) to ensure DNS and SSL propagation
 
 **Screenshot:**
 
-Successful HTTPS test
+<img width="848" height="371" alt="image" src="https://github.com/user-attachments/assets/3e9512d2-99c9-4ba6-93f6-b23826a8eb0d" />
+
+---
+
+#10. Backup Script
+
+A backup script was created to generate timestamped backups of the website directory.
+
+Script file: scripts/backup_web.sh
+
+**Script Explanation**
+
+This Bash script creates a compressed backup (.tar.gz) of the /var/www/html directory and stores it in a folder called web_backups with a timestamp. This allows restoring the website easily before updates or configuration changes.
+
+To run the script:
+```bash
+chmod +x backup_web.sh
+./backup_web.sh
+```
+
+Insert Screenshot: Backup folder showing timestamped .tar.gz file
+
+---
+
+#11. Conclusion
+
+This project shows the full implementation of a secure cloud-based Linux web server under the housing of Azure IaaS. The server combines a custom website, DNS routing based on GoDaddy, encryption with the help of Certbot with SSL, and a Bash backup script to help with the maintenance.
+
+The documentation makes sure that any ICT171 student can repeat the process up to the end.
+
+---
+
+#12. Important Links
+
+Live Site: https://personalbudgetstracker.com
+
+GitHub Repository: Add your repo link here
+
+Video Explainer: Add your video link here
