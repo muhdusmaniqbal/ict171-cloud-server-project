@@ -121,31 +121,20 @@ sudo nano index.html
 
 Insert your website HTML into the new file and save it:
 
-When editing a file in the terminal using nano, you must manually save your changes and exit the editor. Here is how the shortcut sequence works:
+### Saving and Exiting Nano (Ctrl + X, Y, Enter)
 
-1. Press Ctrl + X
+When editing files using the `nano` editor, follow these steps to save your changes:
 
-This tells nano that you want to exit the editor.
+1. Press **Ctrl + X**  
+   This tells nano you want to exit the editor.
 
-If you have made changes, nano will ask:
+2. Press **Y**  
+   This confirms that you want to **save** the changes you made.
 
-Save modified buffer (ANSWERING "No" WILL DESTROY CHANGES)?
+3. Press **Enter**  
+   This accepts the current filename and finishes the save process.
 
-2. Press Y
-
-This means Yes, save my changes.
-
-Pressing Y confirms that you want the file to be written to disk.
-
-3. Press Enter
-
-Nano will then ask:
-
-File Name to Write: filename
-
-Pressing Enter accepts the existing filename and finishes the save.
-
-After pressing Enter, nano closes, and you return to the terminal.
+After pressing Enter, nano will close, and you will return to the terminal with your changes saved.
 
 Test the site using the public IP:
 ```
