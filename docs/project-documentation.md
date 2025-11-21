@@ -73,6 +73,8 @@ sudo apt update
 sudo apt upgrade -y
 ```
 
+---
+
 #5. Install and Configure Nginx 
 
 Install the Nginx web server:
@@ -100,6 +102,8 @@ Test externally:
 ```bash
 curl http://135.232.96.6
 ```
+
+---
 
 #6. Deploying the Website
 
@@ -141,6 +145,8 @@ Test the site using the public IP:
 curl http://135.232.96.6
 ```
 
+---
+
 #7. Domain Configuration (GoDaddy DNS)
 
 To link your domain to your Azure VM, configure the following DNS records in GoDaddy:
@@ -164,6 +170,8 @@ curl http://personalbudgetstracker.com
 
 GoDaddy DNS settings
 
+---
+
 #8. SSL/TLS with Certbot (HTTPS)
 
 Install Certbot and the Nginx plugin:
@@ -182,6 +190,8 @@ curl -vk https://personalbudgetstracker.com
 ```
 
 Screenshot: Browser showing the HTTPS padlock
+
+---
 
 9. Testing & Verification
 
