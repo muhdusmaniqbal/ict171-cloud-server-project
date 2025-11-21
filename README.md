@@ -2,7 +2,6 @@
 
 **Student Name:** Muhammad Usman Iqbal  
 **Student Number:** 35544407
-
 **Unit:** ICT171 – Introduction to Server Environments and Architectures  
 **Domain:** https://personalbudgetstracker.com  
 **Public IP:** 135.232.96.6  
