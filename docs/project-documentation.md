@@ -33,6 +33,7 @@ from scratch.
    - Open inbound ports: **22, 80, 443**
 
 **Screenshot:** 
+
 <img width="600" height="659" alt="image" src="https://github.com/user-attachments/assets/f11a69c1-cba4-46f5-8217-5975886cc909" /> 
 <img width="626" height="386" alt="image" src="https://github.com/user-attachments/assets/e1700e94-896a-494b-a25f-5247c8b84e0a" />
 <img width="494" height="545" alt="image" src="https://github.com/user-attachments/assets/b241de20-2c26-4b8e-a45f-635e822f165e" />
