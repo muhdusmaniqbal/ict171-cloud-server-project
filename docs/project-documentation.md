@@ -119,7 +119,33 @@ Create your website file:
 sudo nano index.html
 ```
 
-Paste your Personal Budget Tracker website HTML into the new file and save it.
+Insert your website HTML into the new file and save it:
+
+When editing a file in the terminal using nano, you must manually save your changes and exit the editor. Here is how the shortcut sequence works:
+
+1. Press Ctrl + X
+
+This tells nano that you want to exit the editor.
+
+If you have made changes, nano will ask:
+
+Save modified buffer (ANSWERING "No" WILL DESTROY CHANGES)?
+
+2. Press Y
+
+This means Yes, save my changes.
+
+Pressing Y confirms that you want the file to be written to disk.
+
+3. Press Enter
+
+Nano will then ask:
+
+File Name to Write: filename
+
+Pressing Enter accepts the existing filename and finishes the save.
+
+After pressing Enter, nano closes, and you return to the terminal.
 
 Test the site using the public IP:
 ```
