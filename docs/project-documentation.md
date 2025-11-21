@@ -75,7 +75,7 @@ sudo apt upgrade -y
 
 ---
 
-#5. Install and Configure Nginx 
+# 5. Install and Configure Nginx 
 
 Install the Nginx web server:
 ```bash
@@ -105,7 +105,7 @@ curl http://135.232.96.6
 
 ---
 
-#6. Deploying the Website
+# 6. Deploying the Website
 
 Navigate to the Nginx web root:
 
@@ -147,7 +147,7 @@ curl http://135.232.96.6
 
 ---
 
-#7. Domain Configuration (GoDaddy DNS)
+# 7. Domain Configuration (GoDaddy DNS)
 
 To link your domain to your Azure VM, configure the following DNS records in GoDaddy:
 
@@ -174,7 +174,7 @@ curl http://personalbudgetstracker.com
 
 ---
 
-#8. SSL/TLS with Certbot (HTTPS)
+# 8. SSL/TLS with Certbot (HTTPS)
 
 Install Certbot and the Nginx plugin:
 ```bash
@@ -197,7 +197,7 @@ curl -vk https://personalbudgetstracker.com
 
 ---
 
-9. Testing & Verification
+# 9. Testing & Verification
 
 Test both protocols:
 ```bash
@@ -218,7 +218,7 @@ Check using multiple devices (mobile + laptop) to ensure DNS and SSL propagation
 
 ---
 
-#10. Backup Script
+# 10. Backup Script
 
 A backup script was created to generate timestamped backups of the website directory.
 
@@ -238,7 +238,7 @@ Insert Screenshot: Backup folder showing timestamped .tar.gz file
 
 ---
 
-#11. Conclusion
+# 11. Conclusion
 
 This project shows the full implementation of a secure cloud-based Linux web server under the housing of Azure IaaS. The server combines a custom website, DNS routing based on GoDaddy, encryption with the help of Certbot with SSL, and a Bash backup script to help with the maintenance.
 
@@ -246,7 +246,7 @@ The documentation makes sure that any ICT171 student can repeat the process up t
 
 ---
 
-#12. Important Links
+# 12. Important Links
 
 Live Site: https://personalbudgetstracker.com
 
