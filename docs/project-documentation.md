@@ -105,17 +105,17 @@ curl http://135.232.96.6
 
 Navigate to the Nginx web root:
 
-```
+```bash
 cd /var/www/html
 ```
 
 Back up the default index file:
-```
+```bash
 sudo mv index.nginx-debian.html index.nginx-debian.html.bak
 ```
 
 Create your website file:
-```
+```bash
 sudo nano index.html
 ```
 
@@ -137,7 +137,65 @@ When editing files using the `nano` editor, follow these steps to save your chan
 After pressing Enter, nano will close, and you will return to the terminal with your changes saved.
 
 Test the site using the public IP:
-```
+```bash
 curl http://135.232.96.6
 ```
 
+#7. Domain Configuration (GoDaddy DNS)
+
+To link your domain to your Azure VM, configure the following DNS records in GoDaddy:
+
+Type	  Name   Value
+ A	      @	   135.232.96.6
+
+These A records point the domain to your server's public IP.
+
+Verify DNS propagation:
+```bash
+nslookup personalbudgetstracker.com
+```
+
+Test the domain:
+```bash
+curl http://personalbudgetstracker.com
+```
+
+**Screenshot:**
+
+GoDaddy DNS settings
+
+#8. SSL/TLS with Certbot (HTTPS)
+
+Install Certbot and the Nginx plugin:
+```bash
+sudo apt install certbot python3-certbot-nginx -y
+```
+
+Request and install the SSL certificate for your domain:
+```bash
+sudo certbot --nginx -d personalbudgetstracker.com -d www.personalbudgetstracker.com
+```
+
+Test HTTPS:
+```bash
+curl -vk https://personalbudgetstracker.com
+```
+
+Screenshot: Browser showing the HTTPS padlock
+
+9. Testing & Verification
+
+Test both protocols:
+```bash
+curl http://personalbudgetstracker.com
+curl -vk https://personalbudgetstracker.com
+```
+
+Verify that Nginx is listening on both ports 80 and 443:
+```bash
+sudo ss -tulpen | grep -E ':80|:443'
+```
+
+Check using multiple devices (mobile + laptop) to ensure DNS and SSL propagation is complete.
+
+📸 Insert Screenshot: Successful HTTPS test
