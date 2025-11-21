@@ -170,7 +170,7 @@ curl http://personalbudgetstracker.com
 
 **Screenshot:**
 
-GoDaddy DNS settings
+<img width="1274" height="176" alt="image" src="https://github.com/user-attachments/assets/e9809342-6d17-4a4f-ae88-a60525a0b196" />
 
 ---
 
@@ -191,7 +191,9 @@ Test HTTPS:
 curl -vk https://personalbudgetstracker.com
 ```
 
-Screenshot: Browser showing the HTTPS padlock
+**Screenshot:**
+
+<img width="851" height="83" alt="image" src="https://github.com/user-attachments/assets/4d2732f1-2871-4fb1-a728-3aa82193cf6a" />
 
 ---
 
@@ -210,4 +212,6 @@ sudo ss -tulpen | grep -E ':80|:443'
 
 Check using multiple devices (mobile + laptop) to ensure DNS and SSL propagation is complete.
 
-📸 Insert Screenshot: Successful HTTPS test
+**Screenshot:**
+
+Successful HTTPS test
