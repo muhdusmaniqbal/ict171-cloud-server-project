@@ -58,7 +58,7 @@ This includes:
 
 A complete walkthrough of the server implementation from start to finish.
 
- **Video Link:** 
+ **Video Link:** [Click Here for Video Explainer](https://youtu.be/3K2UM5i-IyI)
 
 ---
 
